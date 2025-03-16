@@ -1,0 +1,19 @@
+.doctors {
+	padding: 50px 20px;
+	background-color: #f9f9f9;
+	min-height: calc(100vh - 120px);
+}
+
+.doctors h2 {
+	text-align: center;
+	font-size: 32px;
+	color: #007bff;
+	margin-bottom: 30px;
+}
+
+.list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 20px;
+}

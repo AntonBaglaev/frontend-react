@@ -1,0 +1,99 @@
+.doctorProfile {
+	max-width: 1000px;
+	margin: 50px auto;
+	padding: 20px;
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.doctorProfile h2 {
+	text-align: center;
+	margin-bottom: 20px;
+	color: #007bff;
+}
+
+.doctorInfo {
+	margin-bottom: 30px;
+	padding: 20px;
+	background: #f9f9f9;
+	border-radius: 8px;
+}
+
+.doctorInfo p {
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+
+.appointments {
+	margin-bottom: 30px;
+}
+
+.appointments h3 {
+	font-size: 20px;
+	color: #007bff;
+	margin-bottom: 20px;
+}
+
+.appointmentsTable {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.appointmentsTable th,
+.appointmentsTable td {
+	padding: 12px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+}
+
+.appointmentsTable th {
+	background-color: #007bff;
+	color: white;
+}
+
+.appointmentsTable tr:hover {
+	background-color: #f1f1f1;
+}
+
+.confirmButton {
+	padding: 8px 16px;
+	background-color: #28a745;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-right: 10px;
+}
+
+.confirmButton:hover {
+	background-color: #218838;
+}
+
+.cancelButton {
+	padding: 8px 16px;
+	background-color: #dc3545;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.cancelButton:hover {
+	background-color: #c82333;
+}
+
+.logoutButton {
+	width: 100%;
+	padding: 10px;
+	background-color: #007bff;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.logoutButton:hover {
+	background-color: #0056b3;
+}
