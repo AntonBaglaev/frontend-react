@@ -4,22 +4,27 @@ import App from './App';
 import './styles/global.css';
 
 
+
 const initialDoctors = [
   {
     id: 1,
     name: 'Иван Иванов',
+    department: 'Терапевтическое отделение',
     specialization: 'Терапевт',
+    experience: '10 лет',
     rating: 4.5,
-    photo: 'https://via.placeholder.com/150',
+    photo: '/img/doctor1.jpg',
     email: "test1@test.ru",
     password: "doctor123",
   },
   {
     id: 2,
     name: 'Мария Петрова',
+    department: 'Кардиологическое отделение',
     specialization: 'Кардиолог',
+    experience: '8 лет',
     rating: 4.8,
-    photo: 'https://via.placeholder.com/150',
+    photo: '/img/doctor1.webp',
     email: 'doctor2@example.com',
     password: '456789',
   },
@@ -60,6 +65,7 @@ if (!localStorage.getItem('appointments')) {
   localStorage.setItem('appointments', JSON.stringify(initialAppointments));
 }
 
+const doctors = JSON.parse(localStorage.getItem('doctors'));
 
 const container = document.getElementById('root');
 const root = createRoot(container);

@@ -119,9 +119,11 @@ const DoctorCard = ({ doctor }) => {
   return (
     <div className={styles.card}>
       <img src={doctor.photo} alt={doctor.name} className={styles.photo} />
-      <h3>{doctor.name}</h3>
-      <p>{doctor.specialization}</p>
-      <p>Рейтинг: {doctor.rating}</p>
+      <p className={styles.name}>{doctor.name}</p>
+      <p className={styles.department}>{doctor.department}</p>
+      <p className={styles.specialization}>{doctor.specialization}</p>
+      <p className={styles.experience}>Стаж: {doctor.experience}</p>
+      <p className={styles.rating}>Рейтинг: {doctor.rating}</p>
       <button onClick={handleBookAppointment}>Записаться</button>
 
 
