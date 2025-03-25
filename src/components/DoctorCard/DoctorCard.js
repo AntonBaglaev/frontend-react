@@ -16,33 +16,33 @@ const DoctorCard = ({ doctor }) => {
   });
   const navigate = useNavigate();
 
+  console.log('Photo path:', process.env.PUBLIC_URL + '/' + doctor.photo);
+
+  const [imgSrc, setImgSrc] = useState(
+    process.env.PUBLIC_URL + '/' + doctor.photo
+  );
+
+  const handleImageError = () => {
+    setImgSrc(process.env.PUBLIC_URL + '/images/doctor-placeholder.jpg');
+  };
+
   const handleBookAppointment = () => {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-
     if (!currentUser) {
       setShowAuthModal(true);
       return;
     }
-
-
     setShowAppointmentModal(true);
   };
 
-  const handleLogin = () => {
-
-    navigate('/login');
-  };
-
+  const handleLogin = () => navigate('/login');
   const handleRegister = () => {
-
     setShowAuthModal(false);
     setShowRegisterModal(true);
   };
 
   const handleConfirmRegister = () => {
     const { name, email, password } = registerData;
-
     if (!name || !email || !password) {
       alert('Пожалуйста, заполните все поля.');
       return;
@@ -56,11 +56,9 @@ const DoctorCard = ({ doctor }) => {
       appointments: [],
     };
 
-
     const users = JSON.parse(localStorage.getItem('users')) || [];
     localStorage.setItem('users', JSON.stringify([...users, newUser]));
     localStorage.setItem('currentUser', JSON.stringify(newUser));
-
 
     setShowRegisterModal(false);
     setShowAppointmentModal(true);
@@ -68,7 +66,6 @@ const DoctorCard = ({ doctor }) => {
 
   const handleConfirmAppointment = () => {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
     if (!currentUser) {
       alert('Пожалуйста, войдите в систему, чтобы записаться.');
       return;
@@ -90,13 +87,11 @@ const DoctorCard = ({ doctor }) => {
       status: 'Ожидание',
     };
 
-
     const updatedUser = {
       ...currentUser,
       appointments: [...currentUser.appointments, appointment],
     };
     localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-
 
     const users = JSON.parse(localStorage.getItem('users'));
     const updatedUsers = users.map((u) =>
@@ -104,107 +99,167 @@ const DoctorCard = ({ doctor }) => {
     );
     localStorage.setItem('users', JSON.stringify(updatedUsers));
 
-
     const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
     localStorage.setItem('appointments', JSON.stringify([...appointments, appointment]));
 
-
     setShowAppointmentModal(false);
     setShowSuccess(true);
-
-
     setTimeout(() => setShowSuccess(false), 3000);
   };
 
   return (
-    <div className={styles.card}>
-      <img src={doctor.photo} alt={doctor.name} className={styles.photo} />
-      <p className={styles.name}>{doctor.name}</p>
-      <p className={styles.department}>{doctor.department}</p>
-      <p className={styles.specialization}>{doctor.specialization}</p>
-      <p className={styles.experience}>Стаж: {doctor.experience}</p>
-      <p className={styles.rating}>Рейтинг: {doctor.rating}</p>
-      <button onClick={handleBookAppointment}>Записаться</button>
+    <article className={styles.card}>
+      <div className={styles.card__imageContainer}>
+        <img 
+          src={imgSrc}
+          alt={`Доктор ${doctor.name}`}
+          className={styles.card__image}
+          onError={handleImageError}
+        />
+      </div>
 
+      <div className={styles.card__content}>
+        <h3 className={styles.card__name}>{doctor.name}</h3>
+        <p className={styles.card__specialty}>{doctor.specialization}</p>
+        <p className={styles.card__department}>{doctor.department}</p>
 
+        <div className={styles.card__meta}>
+          <span className={styles.card__experience}>Стаж: {doctor.experience} лет</span>
+          <span className={styles.card__rating}>★ {doctor.rating}</span>
+        </div>
+
+        <button
+          className={styles.card__button}
+          onClick={handleBookAppointment}
+        >
+          Записаться на прием
+        </button>
+      </div>
+
+      {/* Модальные окна */}
       {showAuthModal && (
         <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <h3>Войдите или зарегистрируйтесь</h3>
-            <button onClick={handleLogin}>Войти</button>
-            <button onClick={handleRegister}>Создать учётную запись</button>
-            <button onClick={() => setShowAuthModal(false)}>Отмена</button>
+          <div className={styles.modal__content}>
+            <h3 className={styles.modal__title}>Требуется авторизация</h3>
+            <p className={styles.modal__text}>Для записи к врачу необходимо войти в систему</p>
+            <div className={styles.modal__buttons}>
+              <button
+                className={`${styles.modal__button} ${styles.modal__button_primary}`}
+                onClick={handleLogin}
+              >
+                Войти
+              </button>
+              <button
+                className={`${styles.modal__button} ${styles.modal__button_secondary}`}
+                onClick={handleRegister}
+              >
+                Регистрация
+              </button>
+              <button
+                className={styles.modal__button}
+                onClick={() => setShowAuthModal(false)}
+              >
+                Отмена
+              </button>
+            </div>
           </div>
         </div>
       )}
 
-
       {showRegisterModal && (
         <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <h3>Регистрация</h3>
+          <div className={styles.modal__content}>
+            <h3 className={styles.modal__title}>Регистрация</h3>
             <input
               type="text"
               placeholder="Имя"
+              className={styles.modal__input}
               value={registerData.name}
-              onChange={(e) =>
-                setRegisterData({ ...registerData, name: e.target.value })
-              }
+              onChange={(e) => setRegisterData({ ...registerData, name: e.target.value })}
               required
             />
             <input
               type="email"
               placeholder="Email"
+              className={styles.modal__input}
               value={registerData.email}
-              onChange={(e) =>
-                setRegisterData({ ...registerData, email: e.target.value })
-              }
+              onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
               required
             />
             <input
               type="password"
               placeholder="Пароль"
+              className={styles.modal__input}
               value={registerData.password}
-              onChange={(e) =>
-                setRegisterData({ ...registerData, password: e.target.value })
-              }
+              onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
               required
             />
-            <button onClick={handleConfirmRegister}>Зарегистрироваться</button>
-            <button onClick={() => setShowRegisterModal(false)}>Отмена</button>
+            <div className={styles.modal__buttons}>
+              <button
+                className={`${styles.modal__button} ${styles.modal__button_primary}`}
+                onClick={handleConfirmRegister}
+              >
+                Зарегистрироваться
+              </button>
+              <button
+                className={styles.modal__button}
+                onClick={() => setShowRegisterModal(false)}
+              >
+                Отмена
+              </button>
+            </div>
           </div>
         </div>
       )}
 
-
       {showAppointmentModal && (
         <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <h3>Запись к {doctor.name}</h3>
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              required
-            />
-            <input
-              type="time"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              required
-            />
-            <button onClick={handleConfirmAppointment}>Подтвердить</button>
-            <button onClick={() => setShowAppointmentModal(false)}>Отмена</button>
+          <div className={styles.modal__content}>
+            <h3 className={styles.modal__title}>Запись к {doctor.name}</h3>
+            <div className={styles.modal__formGroup}>
+              <label className={styles.modal__label}>Дата:</label>
+              <input
+                type="date"
+                className={styles.modal__input}
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+              />
+            </div>
+            <div className={styles.modal__formGroup}>
+              <label className={styles.modal__label}>Время:</label>
+              <input
+                type="time"
+                className={styles.modal__input}
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                required
+              />
+            </div>
+            <div className={styles.modal__buttons}>
+              <button
+                className={`${styles.modal__button} ${styles.modal__button_primary}`}
+                onClick={handleConfirmAppointment}
+              >
+                Подтвердить запись
+              </button>
+              <button
+                className={styles.modal__button}
+                onClick={() => setShowAppointmentModal(false)}
+              >
+                Отмена
+              </button>
+            </div>
           </div>
         </div>
       )}
 
       {showSuccess && (
-        <div className={styles.successModal}>
-          <p>Запись успешно создана!</p>
+        <div className={styles.notification}>
+          <p className={styles.notification__text}>Запись успешно создана!</p>
         </div>
       )}
-    </div>
+    </article>
   );
 };
 

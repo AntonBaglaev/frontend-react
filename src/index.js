@@ -3,8 +3,6 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 import './styles/global.css';
 
-
-
 const initialDoctors = [
   {
     id: 1,
@@ -13,7 +11,7 @@ const initialDoctors = [
     specialization: 'Терапевт',
     experience: '10 лет',
     rating: 4.5,
-    photo: '/img/doctor1.jpg',
+    photo: '/images/doctors/doctor1.jpg',
     email: "test1@test.ru",
     password: "doctor123",
   },
@@ -24,7 +22,7 @@ const initialDoctors = [
     specialization: 'Кардиолог',
     experience: '8 лет',
     rating: 4.8,
-    photo: '/img/doctor1.webp',
+    photo: '/images/doctors/doctor2.jpg',
     email: 'doctor2@example.com',
     password: '456789',
   },
@@ -53,23 +51,31 @@ const initialAppointments = [
   },
 ];
 
-if (!localStorage.getItem('doctors')) {
-  localStorage.setItem('doctors', JSON.stringify(initialDoctors));
-}
 
-if (!localStorage.getItem('users')) {
-  localStorage.setItem('users', JSON.stringify(initialUsers));
-}
+const initializeLocalStorage = () => {
+  if (!localStorage.getItem('doctors')) {
+    localStorage.setItem('doctors', JSON.stringify(initialDoctors));
+  }
 
-if (!localStorage.getItem('appointments')) {
-  localStorage.setItem('appointments', JSON.stringify(initialAppointments));
-}
+  if (!localStorage.getItem('users')) {
+    localStorage.setItem('users', JSON.stringify(initialUsers));
+  }
 
-const doctors = JSON.parse(localStorage.getItem('doctors'));
+  if (!localStorage.getItem('appointments')) {
+    localStorage.setItem('appointments', JSON.stringify(initialAppointments));
+  }
+
+
+  if (process.env.NODE_ENV === 'development') {
+    console.log('Для работы приложения необходимо разместить изображения врачей в public/images/doctors/');
+    console.log('Нужны файлы: doctor1.jpg и doctor2.jpg');
+  }
+};
+
+initializeLocalStorage();
 
 const container = document.getElementById('root');
 const root = createRoot(container);
-
 
 root.render(
   <React.StrictMode>
