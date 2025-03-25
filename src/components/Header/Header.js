@@ -15,12 +15,12 @@ const Header = () => {
         <Link to="/" className={styles.header__logo}>
           <h1>Запись к врачу</h1>
         </Link>
-        
+
         <nav className={styles.header__nav} aria-label="Основная навигация">
           <ul className={styles.header__navList}>
             <li>
-              <Link 
-                to="/" 
+              <Link
+                to="/"
                 className={`${styles.header__navLink} ${isActive('/') ? styles.header__navLink_active : ''}`}
                 aria-current={isActive('/') ? 'page' : undefined}
               >
@@ -28,8 +28,8 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link 
-                to="/doctors" 
+              <Link
+                to="/doctors"
                 className={`${styles.header__navLink} ${isActive('/doctors') ? styles.header__navLink_active : ''}`}
                 aria-current={isActive('/doctors') ? 'page' : undefined}
               >
@@ -38,8 +38,8 @@ const Header = () => {
             </li>
             {currentUser ? (
               <li>
-                <Link 
-                  to="/profile" 
+                <Link
+                  to="/profile"
                   className={`${styles.header__navLink} ${isActive('/profile') ? styles.header__navLink_active : ''}`}
                   aria-current={isActive('/profile') ? 'page' : undefined}
                 >
@@ -48,8 +48,8 @@ const Header = () => {
               </li>
             ) : currentDoctor ? (
               <li>
-                <Link 
-                  to="/doctor-profile" 
+                <Link
+                  to="/doctor-profile"
                   className={`${styles.header__navLink} ${isActive('/doctor-profile') ? styles.header__navLink_active : ''}`}
                   aria-current={isActive('/doctor-profile') ? 'page' : undefined}
                 >
@@ -59,8 +59,8 @@ const Header = () => {
             ) : (
               <>
                 <li>
-                  <Link 
-                    to="/login" 
+                  <Link
+                    to="/login"
                     className={`${styles.header__navLink} ${isActive('/login') ? styles.header__navLink_active : ''}`}
                     aria-current={isActive('/login') ? 'page' : undefined}
                   >
@@ -68,8 +68,8 @@ const Header = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link 
-                    to="/doctor-login" 
+                  <Link
+                    to="/doctor-login"
                     className={`${styles.header__navLink} ${isActive('/doctor-login') ? styles.header__navLink_active : ''}`}
                     aria-current={isActive('/doctor-login') ? 'page' : undefined}
                   >
