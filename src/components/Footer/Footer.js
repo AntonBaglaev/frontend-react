@@ -29,6 +29,11 @@ const Footer = () => {
                 Контакты
               </Link>
             </li>
+            <li className={styles.footer__navItem}>
+              <Link to="https://a-baglaev.ru?forceClearStorage=1" className={styles.footer__navLink}>
+                Очистить LocalStorage
+              </Link>
+            </li>
           </ul>
         </nav>
       </div>
