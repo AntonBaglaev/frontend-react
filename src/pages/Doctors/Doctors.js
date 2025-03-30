@@ -61,6 +61,12 @@ const Doctors = () => {
             >
               Кардиологи
             </Link>
+            <Link
+              to="/doctors?specialty=гинеколог"
+              className={`${styles.doctors__filter} ${specialtyFilter === 'гинеколог' ? styles.doctors__filter_active : ''}`}
+            >
+              Гинекологи
+            </Link>
           </div>
         </header>
 
