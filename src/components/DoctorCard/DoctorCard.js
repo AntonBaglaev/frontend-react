@@ -16,11 +16,24 @@ const DoctorCard = ({ doctor }) => {
   });
   const navigate = useNavigate();
 
+  
+
   console.log('Photo path:', process.env.PUBLIC_URL + '/' + doctor.photo);
 
   const [imgSrc, setImgSrc] = useState(
     process.env.PUBLIC_URL + '/' + doctor.photo
   );
+
+  const getImagePath = (path) => {
+    try {
+      // Проверяем доступность изображения
+      const image = new Image();
+      image.src = path;
+      return image.complete ? path : process.env.PUBLIC_URL + '/images/doctor-placeholder.jpg';
+    } catch {
+      return process.env.PUBLIC_URL + '/images/doctor-placeholder.jpg';
+    }
+  };
 
   const handleImageError = () => {
     setImgSrc(process.env.PUBLIC_URL + '/images/doctor-placeholder.jpg');
@@ -111,24 +124,27 @@ const DoctorCard = ({ doctor }) => {
     <article className={styles.card}>
       <div className={styles.card__imageContainer}>
         <img 
-          src={imgSrc}
+          src={imgSrc} // Используем объявленную переменную
           alt={`Доктор ${doctor.name}`}
           className={styles.card__image}
-          onError={handleImageError}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = process.env.PUBLIC_URL + '/images/doctor-placeholder.jpg';
+          }}
         />
       </div>
-
+      
       <div className={styles.card__content}>
         <h3 className={styles.card__name}>{doctor.name}</h3>
         <p className={styles.card__specialty}>{doctor.specialization}</p>
         <p className={styles.card__department}>{doctor.department}</p>
-
+        
         <div className={styles.card__meta}>
           <span className={styles.card__experience}>Стаж: {doctor.experience} лет</span>
           <span className={styles.card__rating}>★ {doctor.rating}</span>
         </div>
-
-        <button
+        
+        <button 
           className={styles.card__button}
           onClick={handleBookAppointment}
         >
