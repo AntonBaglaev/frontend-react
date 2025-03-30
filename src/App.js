@@ -9,23 +9,30 @@ import Profile from './pages/Profile/Profile';
 import DoctorProfile from './pages/DoctorProfile/DoctorProfile';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
+import { DoctorsProvider } from './context/DoctorsContext';
 import './styles/global.css';
 
 function App() {
   return (
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/doctors" element={<Doctors />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/doctor-login" element={<DoctorLogin />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/doctor-profile" element={<DoctorProfile />} />
-      </Routes>
-      <Footer />
-    </Router>
+    <DoctorsProvider>
+      <Router>
+        <div className="app-container">
+          <Header />
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/doctors" element={<Doctors />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/doctor-login" element={<DoctorLogin />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/doctor-profile" element={<DoctorProfile />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </DoctorsProvider>
   );
 }
 

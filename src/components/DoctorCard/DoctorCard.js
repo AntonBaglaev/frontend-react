@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './DoctorCard.module.css';
 
@@ -14,29 +14,29 @@ const DoctorCard = ({ doctor }) => {
     email: '',
     password: '',
   });
+
+  const [imgSrc, setImgSrc] = useState('');
   const navigate = useNavigate();
 
-  
+  useEffect(() => {
+    if (!doctor) return;
 
-  console.log('Photo path:', process.env.PUBLIC_URL + '/' + doctor.photo);
-
-  const [imgSrc, setImgSrc] = useState(
-    process.env.PUBLIC_URL + '/' + doctor.photo
-  );
-
-  const getImagePath = (path) => {
-    try {
-      // Проверяем доступность изображения
-      const image = new Image();
-      image.src = path;
-      return image.complete ? path : process.env.PUBLIC_URL + '/images/doctor-placeholder.jpg';
-    } catch {
-      return process.env.PUBLIC_URL + '/images/doctor-placeholder.jpg';
+    if (!doctor.photo) {
+      setImgSrc(`${process.env.PUBLIC_URL}/images/doctor-placeholder.jpg`);
+      return;
     }
-  };
 
-  const handleImageError = () => {
-    setImgSrc(process.env.PUBLIC_URL + '/images/doctor-placeholder.jpg');
+    const imagePath = `${process.env.PUBLIC_URL}/images/doctors/${doctor.photo}`;
+    const img = new Image();
+    img.src = imagePath;
+
+    img.onload = () => setImgSrc(imagePath);
+    img.onerror = () => setImgSrc(`${process.env.PUBLIC_URL}/images/doctor-placeholder.jpg`);
+  }, [doctor]);
+
+  const handleImageError = (e) => {
+    e.target.onerror = null;
+    e.target.src = `${process.env.PUBLIC_URL}/images/doctor-placeholder.jpg`;
   };
 
   const handleBookAppointment = () => {
@@ -120,31 +120,32 @@ const DoctorCard = ({ doctor }) => {
     setTimeout(() => setShowSuccess(false), 3000);
   };
 
+  if (!doctor) return null;
+
   return (
     <article className={styles.card}>
+
       <div className={styles.card__imageContainer}>
-        <img 
-          src={imgSrc} // Используем объявленную переменную
+        <img
+          src={imgSrc || `${process.env.PUBLIC_URL}/images/doctor-placeholder.jpg`}
           alt={`Доктор ${doctor.name}`}
           className={styles.card__image}
-          onError={(e) => {
-            e.target.onerror = null;
-            e.target.src = process.env.PUBLIC_URL + '/images/doctor-placeholder.jpg';
-          }}
+          onError={handleImageError}
         />
       </div>
-      
+
+
       <div className={styles.card__content}>
         <h3 className={styles.card__name}>{doctor.name}</h3>
         <p className={styles.card__specialty}>{doctor.specialization}</p>
         <p className={styles.card__department}>{doctor.department}</p>
-        
+
         <div className={styles.card__meta}>
-          <span className={styles.card__experience}>Стаж: {doctor.experience} лет</span>
+          <span className={styles.card__experience}>Стаж: {doctor.experience}</span>
           <span className={styles.card__rating}>★ {doctor.rating}</span>
         </div>
-        
-        <button 
+
+        <button
           className={styles.card__button}
           onClick={handleBookAppointment}
         >
@@ -152,7 +153,7 @@ const DoctorCard = ({ doctor }) => {
         </button>
       </div>
 
-      {/* Модальные окна */}
+
       {showAuthModal && (
         <div className={styles.modal}>
           <div className={styles.modal__content}>

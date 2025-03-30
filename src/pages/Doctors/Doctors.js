@@ -1,28 +1,44 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import DoctorCard from '../../components/DoctorCard/DoctorCard';
+import { DoctorsContext } from '../../context/DoctorsContext';
 import styles from './Doctors.module.css';
 
 const Doctors = () => {
-  const [doctors, setDoctors] = useState([]);
+  const { doctors, loading, error } = useContext(DoctorsContext);
   const [searchParams] = useSearchParams();
+  const [filteredDoctors, setFilteredDoctors] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const doctorsPerPage = 9;
+
   const specialtyFilter = searchParams.get('specialty');
 
   useEffect(() => {
-    const storedDoctors = JSON.parse(localStorage.getItem('doctors')) || [];
+    if (doctors.length > 0) {
+      let result = doctors;
 
+      if (specialtyFilter) {
+        result = doctors.filter(doctor =>
+          doctor.specialization.toLowerCase() === specialtyFilter.toLowerCase()
+        );
+      }
 
-    const filteredDoctors = specialtyFilter
-      ? storedDoctors.filter(doctor => doctor.specialty === specialtyFilter)
-      : storedDoctors;
+      setFilteredDoctors(result);
+      setCurrentPage(1);
+    }
+  }, [specialtyFilter, doctors]);
 
-    setDoctors(filteredDoctors);
-  }, [specialtyFilter]);
+  const indexOfLastDoctor = currentPage * doctorsPerPage;
+  const indexOfFirstDoctor = indexOfLastDoctor - doctorsPerPage;
+  const currentDoctors = filteredDoctors.slice(indexOfFirstDoctor, indexOfLastDoctor);
+  const totalPages = Math.ceil(filteredDoctors.length / doctorsPerPage);
+
+  if (loading) return <div className={styles.loading}>Загрузка данных...</div>;
+  if (error) return <div className={styles.error}>Ошибка: {error}</div>;
 
   return (
     <main className={styles.doctors} role="main">
       <div className={styles.doctors__container}>
-
         <header className={styles.doctors__header}>
           <h1 className={styles.doctors__title}>Наши специалисты</h1>
 
@@ -34,32 +50,58 @@ const Doctors = () => {
               Все врачи
             </Link>
             <Link
-              to="/doctors?specialty=therapist"
-              className={`${styles.doctors__filter} ${specialtyFilter === 'therapist' ? styles.doctors__filter_active : ''}`}
+              to="/doctors?specialty=терапевт"
+              className={`${styles.doctors__filter} ${specialtyFilter === 'терапевт' ? styles.doctors__filter_active : ''}`}
             >
               Терапевты
             </Link>
             <Link
-              to="/doctors?specialty=cardiologist"
-              className={`${styles.doctors__filter} ${specialtyFilter === 'cardiologist' ? styles.doctors__filter_active : ''}`}
+              to="/doctors?specialty=кардиолог"
+              className={`${styles.doctors__filter} ${specialtyFilter === 'кардиолог' ? styles.doctors__filter_active : ''}`}
             >
               Кардиологи
-            </Link>
-            <Link
-              to="/doctors?specialty=neurologist"
-              className={`${styles.doctors__filter} ${specialtyFilter === 'neurologist' ? styles.doctors__filter_active : ''}`}
-            >
-              Неврологи
             </Link>
           </div>
         </header>
 
-        {doctors.length > 0 ? (
-          <div className={styles.doctors__grid}>
-            {doctors.map((doctor) => (
-              <DoctorCard key={doctor.id} doctor={doctor} />
-            ))}
-          </div>
+        {currentDoctors.length > 0 ? (
+          <>
+            <div className={styles.doctors__grid}>
+              {currentDoctors.map((doctor) => (
+                <DoctorCard key={doctor.id} doctor={doctor} />
+              ))}
+            </div>
+
+            {totalPages > 1 && (
+              <div className={styles.pagination}>
+                <button
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                  className={styles.paginationButton}
+                >
+                  Назад
+                </button>
+
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`${styles.paginationButton} ${currentPage === page ? styles.activePage : ''}`}
+                  >
+                    {page}
+                  </button>
+                ))}
+
+                <button
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  className={styles.paginationButton}
+                >
+                  Вперед
+                </button>
+              </div>
+            )}
+          </>
         ) : (
           <div className={styles.doctors__empty}>
             <p className={styles.doctors__emptyText}>Врачи по выбранной специализации не найдены</p>

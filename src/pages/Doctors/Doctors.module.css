@@ -48,7 +48,6 @@
 	font-weight: 600;
 }
 
-
 .doctors__grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -80,7 +79,6 @@
 	text-decoration: underline;
 }
 
-
 .doctors__footer {
 	text-align: center;
 	padding: 1.5rem;
@@ -103,7 +101,6 @@
 	text-decoration: underline;
 }
 
-
 @media (max-width: 768px) {
 	.doctors__filters {
 		flex-direction: column;
@@ -118,5 +115,60 @@
 
 	.doctors__grid {
 		grid-template-columns: 1fr;
+	}
+}
+
+.loading,
+.error {
+	text-align: center;
+	padding: 2rem;
+	font-size: 1.2rem;
+}
+
+.error {
+	color: #e74c3c;
+}
+
+.pagination {
+	display: flex;
+	justify-content: center;
+	gap: 0.5rem;
+	margin: 2rem 0;
+	flex-wrap: wrap;
+}
+
+.paginationButton {
+	padding: 0.5rem 1rem;
+	border: 1px solid #3498db;
+	background-color: white;
+	color: #3498db;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.paginationButton:hover:not(:disabled) {
+	background-color: #3498db;
+	color: white;
+}
+
+.paginationButton:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.activePage {
+	background-color: #3498db;
+	color: white;
+}
+
+@media (max-width: 768px) {
+	.pagination {
+		gap: 0.3rem;
+	}
+
+	.paginationButton {
+		padding: 0.5rem;
+		min-width: 36px;
 	}
 }
