@@ -1,54 +1,101 @@
-.login {
-	max-width: 400px;
-	margin: 50px auto;
+.loginContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background-color: #f5f7fa;
 	padding: 20px;
-	background: #fff;
-	border-radius: 8px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.login h2 {
+.loginForm {
+	width: 100%;
+	max-width: 400px;
+	background: white;
+	padding: 30px;
+	border-radius: 10px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.loginForm h2 {
 	text-align: center;
+	color: #2c3e50;
+	margin-bottom: 25px;
+	font-size: 24px;
+}
+
+.formGroup {
 	margin-bottom: 20px;
 }
 
-.login input {
-	width: 100%;
-	padding: 10px;
-	margin-bottom: 15px;
-	border: 1px solid #ddd;
-	border-radius: 5px;
+.formGroup label {
+	display: block;
+	margin-bottom: 8px;
+	color: #34495e;
+	font-weight: 500;
 }
 
-.login button {
+.formGroup input {
 	width: 100%;
-	padding: 10px;
-	background-color: #007bff;
+	padding: 12px 15px;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	font-size: 16px;
+	transition: border-color 0.3s;
+}
+
+.formGroup input:focus {
+	outline: none;
+	border-color: #3498db;
+	box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.submitButton {
+	width: 100%;
+	padding: 12px;
+	background-color: #3498db;
 	color: white;
 	border: none;
-	border-radius: 5px;
+	border-radius: 6px;
+	font-size: 16px;
+	font-weight: 500;
 	cursor: pointer;
+	transition: background-color 0.3s;
+	margin-top: 10px;
 }
 
-.login button:hover {
-	background-color: #0056b3;
+.submitButton:hover {
+	background-color: #2980b9;
 }
 
-.error {
-	color: red;
+.errorMessage {
+	color: #e74c3c;
+	background-color: #fdecea;
+	padding: 12px;
+	border-radius: 6px;
+	margin-bottom: 20px;
 	text-align: center;
-	margin-bottom: 15px;
+	font-size: 14px;
 }
 
-.registerLink {
-	background: none;
-	border: none;
-	color: #007bff;
-	cursor: pointer;
-	text-decoration: underline;
-	padding: 0;
+.testCredentials {
+	margin-top: 25px;
+	padding: 15px;
+	background-color: #f8f9fa;
+	border-radius: 6px;
+	font-size: 14px;
 }
 
-.registerLink:hover {
-	color: #0056b3;
+.testCredentials h4 {
+	margin-top: 0;
+	margin-bottom: 10px;
+	color: #2c3e50;
+}
+
+.testCredentials p {
+	margin: 8px 0;
+	color: #7f8c8d;
+}
+
+.testCredentials strong {
+	color: #34495e;
 }
