@@ -1,12 +1,16 @@
-/* Основные стили приложения */
-.App {
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  text-align: center;
 }
 
-.app-container {
+.app {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -18,30 +22,9 @@
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
+  box-sizing: border-box;
 }
 
-/* Анимация логотипа (если нужно) */
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Адаптивные стили */
 @media (max-width: 768px) {
   .main-content {
     padding: 1rem;

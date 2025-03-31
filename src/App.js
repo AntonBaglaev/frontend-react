@@ -16,7 +16,7 @@ function App() {
   return (
     <DoctorsProvider>
       <Router>
-        <div className="app-container">
+        <div className="app">
           <Header />
           <main className="main-content">
             <Routes>
