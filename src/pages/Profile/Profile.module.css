@@ -1,103 +1,457 @@
-/* src/pages/Profile/Profile.module.css */
 .profile {
-  max-width: 800px;
-  margin: 50px auto;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.profile h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #007bff;
-}
-
-.profileInfo {
+.profile__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 30px;
-  padding: 20px;
-  background: #f9f9f9;
-  border-radius: 8px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-.profileInfo p {
+.profile__title {
+  font-size: 24px;
+  color: #2c3e50;
+  margin: 0;
+  font-weight: 600;
+}
+
+.profile__logout {
+  padding: 10px 15px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile__logout:hover {
+  background-color: #c0392b;
+}
+
+.profile__content {
+  display: flex;
+  gap: 30px;
+}
+
+.profile__sidebar {
+  width: 250px;
+  flex-shrink: 0;
+}
+
+.profile__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile__navButton {
+  padding: 12px 15px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #34495e;
+  font-size: 15px;
+}
+
+.profile__navButton:hover {
+  background-color: #f5f5f5;
+  color: #3498db;
+}
+
+.profile__navButton_active {
+  background-color: #3498db;
+  color: white;
+}
+
+.profile__navButton_active:hover {
+  background-color: #2980b9;
+  color: white;
+}
+
+.profile__navIcon {
+  width: 20px;
   font-size: 16px;
-  margin-bottom: 10px;
 }
 
-.appointments {
-  margin-bottom: 30px;
+.profile__main {
+  flex: 1;
 }
 
-.appointments h3 {
-  font-size: 20px;
-  color: #007bff;
+.profile__section {
+  background: white;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   margin-bottom: 20px;
 }
 
-.appointmentsList {
+.profile__sectionTitle {
+  font-size: 20px;
+  color: #2c3e50;
+  margin-top: 0;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  font-weight: 600;
+}
+
+.profile__infoContainer {
+  display: flex;
+  gap: 30px;
+}
+
+.profile__photoContainer {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile__photoPlaceholder {
+  width: 100%;
+  height: 200px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+.profile__photoIcon {
+  font-size: 50px;
+  color: #bdc3c7;
+}
+
+.profile__uploadButton {
+  padding: 10px 15px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  justify-content: center;
+}
+
+.profile__uploadButton:hover {
+  background-color: #2980b9;
+}
+
+.profile__dataContainer {
+  flex: 1;
+}
+
+.profile__dataItem {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.profile__dataIcon {
+  font-size: 18px;
+  color: #3498db;
+  width: 20px;
+  text-align: center;
+}
+
+.profile__dataLabel {
+  font-size: 13px;
+  color: #95a5a6;
+  margin-bottom: 5px;
+}
+
+.profile__dataValue {
+  font-size: 16px;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.profile__form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.profile__formGroup {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+}
+
+.profile__formIcon {
+  font-size: 18px;
+  color: #3498db;
+  width: 20px;
+}
+
+.profile__formInput {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: all 0.3s;
+}
+
+.profile__formInput:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.profile__formInput::placeholder {
+  color: #bdc3c7;
+}
+
+.profile__formInput[type="tel"] {
+  font-family: monospace;
+  letter-spacing: 0.5px;
+}
+
+.profile__formGroup_invalid .profile__formInput {
+  border-color: #e74c3c;
+}
+
+.profile__formGroup_invalid .profile__formInput:focus {
+  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
+}
+
+.profile__error {
+  color: #e74c3c;
+  font-size: 13px;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: absolute;
+  bottom: -20px;
+  left: 35px;
+}
+
+.profile__errorIcon {
+  font-size: 12px;
+}
+
+.profile__formActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.profile__button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.profile__button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.profile__buttonIcon {
+  font-size: 14px;
+}
+
+.profile__button_primary {
+  background-color: #3498db;
+  color: white;
+}
+
+.profile__button_primary:hover:not([disabled]) {
+  background-color: #2980b9;
+}
+
+.profile__button_secondary {
+  background-color: #95a5a6;
+  color: white;
+}
+
+.profile__button_secondary:hover {
+  background-color: #7f8c8d;
+}
+
+.profile__button_danger {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.profile__button_danger:hover {
+  background-color: #c0392b;
+}
+
+.profile__editButton {
+  padding: 10px 15px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile__editButton:hover {
+  background-color: #2980b9;
+}
+
+.profile__appointmentsList {
   list-style: none;
   padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.appointmentItem {
+.profile__appointmentItem {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px;
-  margin-bottom: 15px;
-  background: #f9f9f9;
+  background-color: #f9f9f9;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #3498db;
+  transition: all 0.3s;
 }
 
-.appointmentDetails p {
-  margin: 5px 0;
-  font-size: 14px;
+.profile__appointmentItem:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.cancelButton {
-  padding: 8px 16px;
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
+.profile__appointmentDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
 }
 
-.cancelButton:hover {
-  background-color: #c82333;
+.profile__appointmentField {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.logoutButton {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.profile__appointmentIcon {
+  font-size: 16px;
+  color: #3498db;
+  width: 20px;
+}
+
+.profile__appointmentLabel {
+  font-weight: bold;
+  color: #7f8c8d;
+  font-size: 13px;
+  min-width: 60px;
+}
+
+.profile__appointmentValue {
+  color: #34495e;
+  font-size: 15px;
+}
+
+.profile__emptyState {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px dashed #ddd;
+}
+
+.profile__emptyText {
+  color: #7f8c8d;
+  margin-bottom: 20px;
   font-size: 16px;
 }
 
-.logoutButton:hover {
-  background-color: #0056b3;
+.profile__loading {
+  text-align: center;
+  padding: 50px;
+  font-size: 18px;
+  color: #7f8c8d;
 }
 
-.navButton {
-  width: 100%;
-  padding: 10px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-bottom: 15px;
-}
+@media (max-width: 768px) {
+  .profile__content {
+    flex-direction: column;
+  }
+  
+  .profile__sidebar {
+    width: 100%;
+  }
+  
+  .profile__infoContainer {
+    flex-direction: column;
+  }
+  
+  .profile__photoContainer {
+    width: 100%;
+    align-items: center;
+  }
+  
+  .profile__photoPlaceholder {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 15px;
+  }
+  
+  .profile__appointmentItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
 
-.navButton:hover {
-  background-color: #218838;
+  .profile__formGroup {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .profile__formInput {
+    width: 100%;
+  }
+
+  .profile__error {
+    position: static;
+    margin-top: 0;
+    margin-bottom: 10px;
+    left: 0;
+  }
 }
