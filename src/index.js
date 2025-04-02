@@ -225,17 +225,14 @@ const initialPatients = [
 ];
 
 const initializeStorage = () => {
-  // Очищаем только необходимые данные
   ['doctors', 'patients', 'users', 'appointments'].forEach(key => {
     localStorage.removeItem(key);
   });
 
-  // Инициализируем данные
   localStorage.setItem('doctors', JSON.stringify(initialDoctors));
   localStorage.setItem('patients', JSON.stringify(initialPatients));
-  localStorage.setItem('users', JSON.stringify(initialPatients)); // Для совместимости
-  
-  // Создаем отдельную коллекцию записей
+  localStorage.setItem('users', JSON.stringify(initialPatients));
+
   const allAppointments = initialPatients.flatMap(p => p.appointments);
   localStorage.setItem('appointments', JSON.stringify(allAppointments));
 
