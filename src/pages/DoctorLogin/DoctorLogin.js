@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './DoctorLogin.css';
 
@@ -7,10 +7,33 @@ const DoctorLogin = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showTestData, setShowTestData] = useState(false);
+  const [isAutoLoggingIn, setIsAutoLoggingIn] = useState(false);
   const navigate = useNavigate();
 
   const isDevelopment = process.env.NODE_ENV === 'development';
   const testDoctors = isDevelopment ? JSON.parse(localStorage.getItem('doctors')) || [] : [];
+  const doctor1 = testDoctors.find(d => d.id === 1);
+
+  // Обернем handleAutoLogin в useCallback
+  const handleAutoLogin = useCallback((doctor) => {
+    localStorage.setItem('currentDoctor', JSON.stringify(doctor));
+    setIsAutoLoggingIn(false);
+    navigate('/doctor-profile');
+  }, [navigate]);
+
+  useEffect(() => {
+    if (isDevelopment && doctor1) {
+      setIsAutoLoggingIn(true);
+      setEmail(doctor1.email);
+      setPassword(doctor1.password);
+      
+      const timer = setTimeout(() => {
+        handleAutoLogin(doctor1);
+      }, 1000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isDevelopment, doctor1, handleAutoLogin]); // Добавили handleAutoLogin в зависимости
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,7 +58,6 @@ const DoctorLogin = () => {
           setError('Неверный email или пароль. Проверьте введенные данные.');
         }
       } else {
-
         setError('');
         localStorage.setItem('currentDoctor', JSON.stringify({
           name: 'Доктор (тестовый режим)',
@@ -58,10 +80,17 @@ const DoctorLogin = () => {
     setError('');
   };
 
+
   return (
     <div className="doctor-login">
       <div className="doctor-login__container">
         <h2 className="doctor-login__title">Вход для врачей</h2>
+
+        {isAutoLoggingIn && (
+          <div className="doctor-login__notice">
+            <p>Автоматический вход для тестового врача...</p>
+          </div>
+        )}
 
         {error && <div className="doctor-login__error">{error}</div>}
 
@@ -76,6 +105,7 @@ const DoctorLogin = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              disabled={isAutoLoggingIn}
             />
           </div>
 
@@ -90,11 +120,21 @@ const DoctorLogin = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={!isDevelopment ? 8 : undefined}
+              disabled={isAutoLoggingIn}
             />
           </div>
 
-          <button type="submit" className="doctor-login__submit">
-            Войти
+          <button 
+            type="submit" 
+            className="doctor-login__submit"
+            disabled={isAutoLoggingIn}
+          >
+            {isAutoLoggingIn ? (
+              <>
+                <span className="doctor-login__loading"></span>
+                Вход...
+              </>
+            ) : 'Войти'}
           </button>
         </form>
 
@@ -103,6 +143,7 @@ const DoctorLogin = () => {
             <button
               onClick={() => setShowTestData(!showTestData)}
               className="doctor-login__toggle-btn"
+              disabled={isAutoLoggingIn}
             >
               {showTestData ? 'Скрыть тестовые данные' : 'Показать тестовые данные'}
             </button>
