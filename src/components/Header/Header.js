@@ -10,6 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import styles from './Header.module.css';
 
+
 const Header = () => {
   const location = useLocation();
   const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -21,6 +22,7 @@ const Header = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
 
   return (
     <header className={styles.header} role="banner">
